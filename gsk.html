@@ -5,18 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Acionamento GSK Interplayers</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="M-icon.png" />
 </head>
 <body>
   <div class="logo-container">
     <div class="logo-icon">M</div>
-    <div class="logo-text">MONITORA</div>
+    <div class="logo-text">AUX MONITÓRA</div>
   </div>
 
   <div class="step-box">
-    <h1 id="stepText">Clique em "Iniciar" para começar</h1>
-    <button id="nextBtn" onclick="nextStep()">Iniciar</button>
+    <h1 id="stepText">Clique em "INICIAR" para começar</h1>
+    <button id="nextBtn" onclick="nextStep()">INICIAR</button>
     <button onclick="resetSteps()">RESET</button>
-    <button onclick="window.location.href='index.html'">Voltar ao Início</button>
+    <button onclick="window.location.href='index.html'">VOLTAR AO INICIO</button>
     <div class="timer">
       ⏱️ Tempo total: <span id="totalTime">00:00</span><br/>
       ⌛ Tempo da tarefa: <span id="taskTime">00:00</span>
@@ -26,7 +27,15 @@
   <audio id="stepSound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3" preload="auto"></audio>
 
   <script>
-    const steps = ["1. Acessa o chamado GSK", "2. Preencher solicitante: GSK VACINAS - Danilo Witzel", "3. Classificação do atendimento: Tipo - Incidente, Produtos - Clínicas, Serviço - Problema, Subserviço - Cadastrar usuário, Etapa - Nível 1", "4. Preencher descrição da solicitação, adicionar pontos (.), e salvar", "5. Abrir chamado no 4BIZ: VAREJO - OUTROS, Contrato INTERPLAYERS, Descrição com todos os dados", "6. Apontamento das horas", "7. Suspender chamado na fila NOC CLIENTES", "8. Enviar template no grupo WhatsApp GSK"];
+    const steps = [
+        "1. Acessa o chamado GSK", 
+        "2. Preencher solicitante: GSK VACINAS - Danilo Witzel", 
+        "3. Classificação do atendimento: Tipo - Incidente, Produtos - Clínicas, Serviço - Problema, Subserviço - Cadastrar usuário, Etapa - Nível 1", 
+        "4. Preencher descrição da solicitação, adicionar pontos (.), e salvar", 
+        "5. Abrir chamado no 4BIZ: VAREJO - OUTROS, Contrato INTERPLAYERS, Descrição com todos os dados", 
+        "6. Apontamento das horas", 
+        "7. Suspender chamado na fila NOC CLIENTES", 
+        "8. Enviar template no grupo WhatsApp GSK"];
     let currentStep = -1;
     let startTime, taskStartTime;
     let totalInterval, taskInterval;
@@ -112,5 +121,10 @@
       clearInterval(taskInterval);
     }
   </script>
+<br>
+  <footer>
+    <p>&copy; 2025 Diogo M. Aguiar - Todos os direitos reservados.</p>
+  </footer>
+  <br>
 </body>
 </html>
