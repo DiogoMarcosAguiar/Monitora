@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acionamento GSK Interplayers</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="logo-container">
+    <div class="logo-icon">M</div>
+    <div class="logo-text">MONITORA</div>
+  </div>
+
+  <div class="step-box">
+    <h1 id="stepText">Clique em "Iniciar" para começar</h1>
+    <button id="nextBtn" onclick="nextStep()">Iniciar</button>
+    <button onclick="resetSteps()">RESET</button>
+    <button onclick="window.location.href='index.html'">Voltar ao Início</button>
+    <div class="timer">
+      ⏱️ Tempo total: <span id="totalTime">00:00</span><br/>
+      ⌛ Tempo da tarefa: <span id="taskTime">00:00</span>
+    </div>
+  </div>
+
+  <audio id="stepSound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3" preload="auto"></audio>
+
+  <script>
+    const steps = ["1. Acessa o chamado GSK", "2. Preencher solicitante: GSK VACINAS - Danilo Witzel", "3. Classificação do atendimento: Tipo - Incidente, Produtos - Clínicas, Serviço - Problema, Subserviço - Cadastrar usuário, Etapa - Nível 1", "4. Preencher descrição da solicitação, adicionar pontos (.), e salvar", "5. Abrir chamado no 4BIZ: VAREJO - OUTROS, Contrato INTERPLAYERS, Descrição com todos os dados", "6. Apontamento das horas", "7. Suspender chamado na fila NOC CLIENTES", "8. Enviar template no grupo WhatsApp GSK"];
+    let currentStep = -1;
+    let startTime, taskStartTime;
+    let totalInterval, taskInterval;
+    let taskDurations = [];
+
+    const stepText = document.getElementById("stepText");
+    const nextBtn = document.getElementById("nextBtn");
+    const totalTimeEl = document.getElementById("totalTime");
+    const taskTimeEl = document.getElementById("taskTime");
+    const stepSound = document.getElementById("stepSound");
+
+    function formatTime(ms) {
+      const sec = Math.floor(ms / 1000);
+      const min = Math.floor(sec / 60);
+      const remainingSec = sec % 60;
+      return `${String(min).padStart(2, '0')}:${String(remainingSec).padStart(2, '0')}`;
+    }
+
+    function updateTimers() {
+      const now = Date.now();
+      if (startTime) totalTimeEl.innerText = formatTime(now - startTime);
+      if (taskStartTime) taskTimeEl.innerText = formatTime(now - taskStartTime);
+    }
+
+    function startTimers() {
+      clearInterval(totalInterval);
+      totalInterval = setInterval(updateTimers, 1000);
+    }
+
+    function startTaskTimer() {
+      clearInterval(taskInterval);
+      taskStartTime = Date.now();
+      taskInterval = setInterval(updateTimers, 1000);
+    }
+
+    function nextStep() {
+      if (currentStep >= 0 && currentStep < steps.length) {
+        const duration = Date.now() - taskStartTime;
+        taskDurations[currentStep] = formatTime(duration);
+      }
+
+      currentStep++;
+
+      if (currentStep === 0) {
+        startTime = Date.now();
+        startTimers();
+        nextBtn.innerText = "Próximo";
+      }
+
+      if (currentStep < steps.length) {
+        stepText.style.opacity = 0;
+        setTimeout(() => {
+          stepText.innerText = steps[currentStep];
+          stepText.style.opacity = 1;
+        }, 300);
+        stepSound.play();
+        startTaskTimer();
+      } else {
+        clearInterval(taskInterval);
+        clearInterval(totalInterval);
+        showFinalSummary();
+        nextBtn.disabled = true;
+      }
+    }
+
+    function showFinalSummary() {
+      let summary = "✅ Processo Finalizado!\n\n⏱️ Tempos de execução:\n";
+      taskDurations.forEach((time, index) => {
+        summary += `${index + 1} - ${time}\n`;
+      });
+      stepText.innerText = summary;
+    }
+
+    function resetSteps() {
+      currentStep = -1;
+      stepText.innerText = 'Clique em "Iniciar" para começar';
+      nextBtn.innerText = "Iniciar";
+      nextBtn.disabled = false;
+      totalTimeEl.innerText = "00:00";
+      taskTimeEl.innerText = "00:00";
+      taskDurations = [];
+      clearInterval(totalInterval);
+      clearInterval(taskInterval);
+    }
+  </script>
+</body>
+</html>
