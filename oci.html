@@ -5,19 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Acionamento OCI</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" type="image/png" href="M-icon.png" />
 </head>
 <body>
   <div class="logo-container">
-    <div class="logo-icon">M</div><br>
-    <div class="logo-text">AUX MONITÓRA</div>
+    <div class="logo-icon">M</div>
+    <div class="logo-text">MONITORA</div>
   </div>
 
   <div class="step-box">
-    <h1 id="stepText">Clique em "INICIAR" para começar</h1>
-    <button id="nextBtn" onclick="nextStep()">INICIAR</button>
+    <h1 id="stepText">Clique em "Iniciar" para começar</h1>
+    <button id="nextBtn" onclick="nextStep()">Iniciar</button>
+    <button onclick="prevStep()">Voltar Passo</button>
     <button onclick="resetSteps()">RESET</button>
-    <button onclick="window.location.href='index.html'">VOLTAR AO INICIO</button>
+    <button onclick="window.location.href='index.html'">Voltar ao Início</button>
     <div class="timer">
       ⏱️ Tempo total: <span id="totalTime">00:00</span><br/>
       ⌛ Tempo da tarefa: <span id="taskTime">00:00</span>
@@ -74,7 +74,7 @@
       if (currentStep === 0) {
         startTime = Date.now();
         startTimers();
-        nextBtn.innerText = "PRÓXIMO";
+        nextBtn.innerText = "Próximo";
       }
 
       if (currentStep < steps.length) {
@@ -90,6 +90,15 @@
         clearInterval(totalInterval);
         showFinalSummary();
         nextBtn.disabled = true;
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 0) {
+        currentStep--;
+        stepText.innerText = steps[currentStep];
+        startTaskTimer();
+        stepSound.play();
       }
     }
 
@@ -113,10 +122,5 @@
       clearInterval(taskInterval);
     }
   </script>
-<br>
-  <footer>
-    <p>&copy; 2025 Diogo M. Aguiar - Todos os direitos reservados.</p>
-  </footer>
-  <br>
 </body>
 </html>

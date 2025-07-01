@@ -63,3 +63,7 @@ button {
 button:hover {
   background-color: #3151b5;
 }
+
+.timer {
+  margin-top: 20px;
+}
